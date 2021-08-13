@@ -3,8 +3,8 @@ ajax请求函数模块
 返回值为promise
 */
 import axios from 'axios'
-export default function ajax(url, data={}, type='GET'){
-    return new Promise(function(resolve, reject){
+export default function ajax (url, data = {}, type = 'GET') {
+    return new Promise(function (resolve, reject) {
         let promise
         if (type === 'GET') {
             let dataStr = ''
@@ -13,10 +13,10 @@ export default function ajax(url, data={}, type='GET'){
             })
             if (dataStr !== '') {
                 dataStr = dataStr.substring(0, dataStr.lastIndexOf('&'))
-                url = url + '?' +dataStr
+                url = url + '?' + dataStr
             }
             promise = axios.get(url)
-        }else{
+        } else {
             promise = axios.post(url, data)
         }
         promise.then(response => {

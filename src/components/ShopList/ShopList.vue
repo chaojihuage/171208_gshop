@@ -1,10 +1,11 @@
 <template>
     <div class="shop_container">
-        <ul class="shop_list">
-            <li class="shop_li">
+        <ul class="shop_list" v-if="shops.length">
+            <li class="shop_li border-1px" v-for="(shop, index) in shops"
+            :key="index" @click="$router.push('/shop')">
                 <a>
                     <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/011.jpg">
+                        <img class="shop_img" :src="baseImageUrl+shop.image_path">
                     </div>
                     <div class="shop_right">
                         <section class="shop_detail_header">
@@ -13,483 +14,25 @@
                                     <span>品牌</span>
                                 </div>
                                 <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
+                                    <span class="ellipsis">{{shop.name}}</span>
                                 </div>
                             </div>
                             <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">3.6</span>
-                                <span>月售106单</span>
+                                <Star :score="shop.rating" :size="24"/>
+                                <span class="mark">{{shop.rating}}</span>
+                                <span>月售{{shop.recent_order_num}}单</span>
                             </div>
                             <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
+                                <span>￥{{shop.float_minimum_order_amount}}起送/配送费约￥{{shop.float_delivery_fee}}</span>
                             </div>
                         </section>
                         <section class="shop_honor">
                             <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
+                                <span class="supports" v-for="(support, index) in shop.supports" :key="index">{{support.icon_name}}</span>
                             </div>
                             <div class="honor_descript">
                                 <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/012.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">4.1</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/013.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">3.2</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/014.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">3.6</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/016.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">3.0</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/017.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">4.0</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/018.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">4.8</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/019.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">4.4</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </a>
-            </li>
-            <li class="shop_li">
-                <a>
-                    <div class="shop_left">
-                        <img class="shop_img" src="./images/shop/020.jpg">
-                    </div>
-                    <div class="shop_right">
-                        <section class="shop_detail_header">
-                            <div class="shop_top">
-                                <div class="shop_top_title">
-                                    <span>品牌</span>
-                                </div>
-                                <div class="shop_top_text">
-                                    <span class="ellipsis">锄禾日当午，汗滴禾下土</span>
-                                </div>
-                            </div>
-                            <div class="shop_middle">
-                                <ul>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                    <li>
-                                        <i class="iconfont icon-star"></i>
-                                    </li>
-                                </ul>
-                                <span class="mark">4.5</span>
-                                <span>月售106单</span>
-                            </div>
-                            <div class="shop_fotter">
-                                <span>￥20起送/配送费约￥5</span>
-                            </div>
-                        </section>
-                        <section class="shop_honor">
-                            <div class="honor">
-                                <span>保</span>
-                                <span>准</span>
-                                <span>票</span>
-                            </div>
-                            <div class="honor_descript">
-                                <div class="descript_position">
-                                    <span>硅谷专送</span>
+                                    <span>{{shop.delivery_mode.text}}</span>
                                 </div>
                             </div>
                         </section>
@@ -497,11 +40,33 @@
                 </a>
             </li>
         </ul>
+        <ul v-else>
+            <li v-for="item in 6" :key="item">
+                <img src="./images/shop_back.svg" alt="back">
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
-    export default{}
+    import {mapState} from 'vuex'
+    import Star from '../Star/Star.vue'
+    export default{
+        data () {
+            return {
+                baseImageUrl: '//www.test2.com',
+                isC: true,
+                isD: false,
+                isE: false
+            }
+        },
+        components: {
+            Star
+        },
+        computed: {
+            ...mapState(['shops'])
+        }
+    }
 </script>
 
 <style lang='stylus' rel='stylesheet/stylus'>
@@ -552,15 +117,10 @@
                                     >span
                                         display block
                                         font-size 20px
+                                        font-weight bold
                             .shop_middle
                                 display flex
                                 flex-flow row nowrap
-                                ul
-                                    display flex
-                                    flex-flow row nowrap
-                                    li
-                                        i
-                                            color #f2e642
                                 .mark
                                     color #e1d755
                                 span
@@ -572,4 +132,11 @@
                             margin-top 10px
                             margin-right 10px
                             float right
+                            .honor
+                                .supports
+                                    border 1px solid rgba(255,128,194,.2)
+                            .honor_descript
+                                .descript_position
+                                    span
+                                        background-color rgba(255,128,194,.3)
 </style>

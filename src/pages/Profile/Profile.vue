@@ -1,16 +1,16 @@
 <template>
     <div class="profile">
         <HeaderTop title="我的"></HeaderTop>
-        <router-link to="/login" class="progile-user">
+        <router-link :to="userInfo._id?'/userinfo':'/login'" class="progile-user">
             <div class="progile-link">
                 <img class="progile_image" src="./images/person.png">
                 <div class="progile-message">
                     <a class="progile_sign" href="javascript:;">
-                        <span>登录/注册</span>
+                        <span v-if="!userInfo.phone">{{userInfo.name||userInfo._id||'登录/注册'}}</span>
                     </a>
                     <div class="progile_text">
                         <i class="iconfont icon-iconfontshouji"></i>
-                        <span>暂无绑定手机号</span>
+                        <span>{{userInfo.phone||'暂无绑定手机号'}}</span>
                     </div>
                 </div>
                 <div class="progile-more">
@@ -49,6 +49,7 @@
                 </div>
             </div>
         </div>
+        <div class="lineCut"></div>
         <div class="me-order">
             <div class="me-order-position">
                 <div class="order-left">
@@ -88,6 +89,7 @@
                 </div>
             </div>
         </div>
+        <div class="lineCut"></div>
         <div class="service-center">
             <div class="service-center-position">
                 <div class="service-left">
@@ -101,14 +103,37 @@
                 </div>
             </div>
         </div>
+        <div class="lineCut"></div>
+        <div class="outLogin" v-show="userInfo._id">
+            <mt-button type="danger" class="outLoginBtn" @click="logout">退出登录</mt-button>
+        </div>
     </div>
 </template>
 
 <script>
     import HeaderTop from '../../components/HeaderTop/HeaderTop.vue'
+    import {mapState} from 'vuex'
+    import {MessageBox, Toast} from 'mint-ui'
     export default {
+        computed: {
+            ...mapState(['userInfo'])
+        },
         components: {
             HeaderTop
+        },
+        methods: {
+            logout () {
+                MessageBox.confirm('确认退出吗？').then(() => {
+                    // 请求退出
+                    this.$store.dispatch('logout')
+                    Toast({
+                        message: '登出完成',
+                        duration: 1000})
+                    // 刷新验证码
+                }, () => {
+                    console.log('点击了取消')
+                })
+            }
         }
     }
 </script>
@@ -117,7 +142,7 @@
     @import "../../common/stylus/mixins.styl"
     .profile
         width 100%
-        background-color #fff
+        background-color rgb(245,245,245)
         overflow hidden
         .header
             background-color #02a774
@@ -191,6 +216,7 @@
                     .more
                         color #fff
         .progile-number
+            background-color #fff
             height 80px
             clearFix()
             bottom-border-1px(#e4e4e4)
@@ -234,6 +260,7 @@
                 .number_left_bottom
                     margin-top 5px
         .me-order
+            background-color #fff
             height 45px
             line-height 45px
             bottom-border-1px(#ccf0eb)
@@ -255,6 +282,7 @@
                     .more
                         color #a8d9dc
         .integral-shop
+            background-color #fff
             height 45px
             line-height 45px
             clear both
@@ -277,6 +305,7 @@
                     .more
                         color #a8d9dc
         .card-vip
+            background-color #fff
             height 45px
             line-height 45px
             clear both
@@ -299,6 +328,7 @@
                     .more
                         color #a8d9dc
         .service-center
+            background-color #fff
             height 45px
             line-height 45px
             clear both
@@ -320,4 +350,12 @@
                     float right
                     .more
                         color #a8d9dc
+        .lineCut
+            display block
+            width 100%
+            height 10px
+        .outLogin
+            .outLoginBtn
+                width 100%
+                font-size 16px
 </style>
